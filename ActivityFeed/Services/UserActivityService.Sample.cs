@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using ActivityFeed.Activation;
 using ActivityFeed.Views;
 using AdaptiveCards;
+using Windows.ApplicationModel;
 using Windows.UI;
 using Windows.UI.Shell;
+
 
 namespace ActivityFeed.Services
 {
@@ -13,20 +15,15 @@ namespace ActivityFeed.Services
     {
         public static async Task AddSampleUserActivity()
         {
-            var displayText = $"Work on {nameof(SchemeActivationSamplePage)}";
-            var description = $"UserActivity description, this activity was created at {DateTime.Now.ToShortTimeString()}";
+            var activityId = nameof(SchemeActivationSamplePage);
+            var displayText = "Sample Activity";
+            var description = $"Sample UserActivity added from Application '{Package.Current.DisplayName}' at {DateTime.Now.ToShortTimeString()}";
             var imageUrl = "http://adaptivecards.io/content/cats/2.png";
+            
+            var activityData = new UserActivityData(activityId, CreateActivationDataSample(), displayText, Colors.DarkRed);
             var adaptiveCard = CreateAdaptiveCardSample(displayText, description, imageUrl);
 
-            var activityData = new UserActivityData
-            {
-                ActivityId = nameof(SchemeActivationSamplePage),
-                ActivationData = CreateActivationDataSample(),
-                DisplayText = displayText,
-                BackgroundColor = Colors.DarkRed
-            };
-
-            await UserActivityService.AddAsync(activityData, adaptiveCard);
+            await UserActivityService.CreateUserActivityAsync(activityData, adaptiveCard);
         }
 
         private static SchemeActivationData CreateActivationDataSample()

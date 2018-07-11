@@ -12,6 +12,7 @@ namespace ActivityFeed.Activation
     // TODO WTS: Change the image in Assets/Logo.png to one for display if the OS asks the user which app to launch.
     internal class SchemeActivationHandler : ActivationHandler<ProtocolActivatedEventArgs>
     {
+        // By default, this handler expects URIs of the format:'wtsapp:sample?paramName1=paramValue1&paramName2=paramValue2'
         protected override async Task HandleInternalAsync(ProtocolActivatedEventArgs args)
         {
             // Create data from activation Uri in ProtocolActivatedEventArgs

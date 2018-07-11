@@ -8,13 +8,24 @@ namespace ActivityFeed.Services
 {
     public class UserActivityData
     {
-        public string ActivityId { get; set; }
+        public string ActivityId { get; private set; }
 
-        public SchemeActivationData ActivationData { get; set; }
+        public SchemeActivationData ActivationData { get; private set; }
 
-        public string DisplayText { get; set; }
+        public string DisplayText { get; private set; }
 
-        public Color BackgroundColor { get; set; } = default(Color);
+        public string Description { get; private set; }
+
+        public Color BackgroundColor { get; private set; }
+
+        public UserActivityData(string activityId, SchemeActivationData activationData, string displayText, Color backgroundColor = default(Color), string description = null)
+        {
+            ActivityId = activityId;
+            ActivationData = activationData;
+            DisplayText = displayText;
+            BackgroundColor = backgroundColor;
+            Description = description ?? string.Empty;
+        }
 
         public async Task<UserActivity> ToUserActivity()
         {
@@ -28,6 +39,7 @@ namespace ActivityFeed.Services
             activity.ActivationUri = ActivationData.Uri;
             activity.VisualElements.DisplayText = DisplayText;
             activity.VisualElements.BackgroundColor = BackgroundColor;
+            activity.VisualElements.Description = Description;
 
             return activity;
         }

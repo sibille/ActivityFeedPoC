@@ -19,7 +19,6 @@ namespace ActivityFeed.Activation
 
         public SchemeActivationData(Uri activationUri)
         {
-            // By default, this handler expects URIs of the format:'wtsapp:MainPage?paramName1=paramValue1&paramName2=paramValue2'
             PageType = SchemeActivationConfig.GetPage(activationUri.AbsolutePath);
 
             if (!IsValid || string.IsNullOrEmpty(activationUri.Query))
